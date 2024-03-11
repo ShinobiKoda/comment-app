@@ -213,7 +213,6 @@ button{
 }
 
 .action_buttons > span:first-of-type{
-  margin-right: 1rem;
   color: var(--Soft-Red);
   font-weight: 500;
 }
@@ -228,4 +227,45 @@ button{
   background-color: var(--Moderate-blue);
   color: #fff;
   font-weight: 500;
+}
+
+@media screen and (min-width: 600px) {
+  .box{
+    position: relative;
+    padding:  0 2rem;
+  }
+
+  
+
+  .votes{
+    position: absolute;
+    left: 0.7rem;
+    top: 3rem;
+    flex-direction: column;
+  }
+
+  .absolute_container{
+    margin-left: 3rem;
+    padding-top: 2rem;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .reply{
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+
+  .reply img{
+    width: 1.5rem;
+  }
+
+  .action_buttons{
+    position: absolute;
+    top: 2.2rem;
+    right: 1rem;
+  }
+
+
 }

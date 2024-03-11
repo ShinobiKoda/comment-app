@@ -50,12 +50,14 @@ const Home = () => {
         {comments &&
           comments.map((comment) => (
             <div className="comment_container box" key={comment.id}>
-              <div className="profile">
-                <img src={comment.user.image.png} alt="" />
-                <span className="user_name">{comment.user.username}</span>
-                <span className="date_comment">{comment.createdAt}</span>
+              <div className="absolute_container">
+                <div className="profile">
+                  <img src={comment.user.image.png} alt="" />
+                  <span className="user_name">{comment.user.username}</span>
+                  <span className="date_comment">{comment.createdAt}</span>
+                </div>
+                <p>{comment.content}</p>
               </div>
-              <p>{comment.content}</p>
               <div className="vote_container">
                 <div className="votes">
                   <button
@@ -92,22 +94,24 @@ const Home = () => {
                         // Render the last reply with different content and styling
                         return (
                           <div className="reply_container box" key={reply.id}>
-                            <div className="profile">
-                              <img src={reply.user.image.png} alt="" />
-                              <span className="user_name">
-                                {reply.user.username}
-                              </span>
-                              <span className="you">you</span>
-                              <span className="date_comment">
-                                {reply.createdAt}
-                              </span>
+                            <div className="absolute_container">
+                              <div className="profile">
+                                <img src={reply.user.image.png} alt="" />
+                                <span className="user_name">
+                                  {reply.user.username}
+                                </span>
+                                <span className="you">you</span>
+                                <span className="date_comment">
+                                  {reply.createdAt}
+                                </span>
+                              </div>
+                              <p>
+                                <span className="replying_to">
+                                  @{reply.replyingTo}
+                                </span>{" "}
+                                {reply.content}
+                              </p>
                             </div>
-                            <p>
-                              <span className="replying_to">
-                                @{reply.replyingTo}
-                              </span>{" "}
-                              {reply.content}
-                            </p>
 
                             <div className="vote_container">
                               <div className="votes">
@@ -140,38 +144,41 @@ const Home = () => {
                         // Render all other replies normally
                         return (
                           <div className="reply_container box" key={reply.id}>
-                            <div className="profile">
-                              <img src={reply.user.image.png} alt="" />
-                              <span className="user_name">
-                                {reply.user.username}
-                              </span>
-                              <span className="date_comment">
-                                {reply.createdAt}
-                              </span>
-                            </div>
-                            <p>
-                              <span className="replying_to">
-                                @{reply.replyingTo}
-                              </span>{" "}
-                              {reply.content}
-                            </p>
-                            <div className="vote_container">
-                              <div className="votes">
-                                <button
-                                  className="add"
-                                  onClick={() => incrementValue(reply.id)}
-                                >
-                                  +
-                                </button>
-                                <span className="result">
-                                  {votes[reply.id]}
+                            <div className="absolute_container">
+                              <div className="profile">
+                                <img src={reply.user.image.png} alt="" />
+                                <span className="user_name">
+                                  {reply.user.username}
                                 </span>
-                                <button
-                                  className="minus"
-                                  onClick={() => decrementValue(reply.id)}
-                                >
-                                  -
-                                </button>
+                                <span className="date_comment">
+                                  {reply.createdAt}
+                                </span>
+                              </div>
+                              <p>
+                                <span className="replying_to">
+                                  @{reply.replyingTo}
+                                </span>{" "}
+                                {reply.content}
+                              </p>
+                              <div className="vote_container">
+                                <div className="votes">
+                                  <button
+                                    className="add"
+                                    onClick={() => incrementValue(reply.id)}
+                                  >
+                                    +
+                                  </button>
+                                  <span className="result">
+                                    {votes[reply.id]}
+                                  </span>
+                                  <button
+                                    className="minus"
+                                    onClick={() => decrementValue(reply.id)}
+                                  >
+                                    -
+                                  </button>
+                                </div>
+
                               </div>
                               <div className="reply">
                                 <img src={reply_img} alt="Reply Icon" />
