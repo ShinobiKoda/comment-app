@@ -151,11 +151,17 @@ button{
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 1rem;
 }
 
 .vote_container img {
   height: auto;
   width: 1rem;
+  cursor: pointer;
+}
+
+.vote_container img:hover{
+  opacity: 0.8;
 }
 
 .vote_container .votes {
@@ -189,4 +195,37 @@ button{
 .reply{
   display: flex;
   gap: 0.7rem;
+  margin-top: 1rem;
+}
+
+
+.action_buttons{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+}
+
+.action_buttons img:hover,
+.action_buttons span:hover{
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.action_buttons > span:first-of-type{
+  margin-right: 1rem;
+  color: var(--Soft-Red);
+  font-weight: 500;
+}
+
+.action_buttons > span:last-of-type{
+  color: var(--Moderate-blue);
+  font-weight: 500;
+}
+
+.you{
+  padding: 0.25rem;
+  background-color: var(--Moderate-blue);
+  color: #fff;
+  font-weight: 500;
 }

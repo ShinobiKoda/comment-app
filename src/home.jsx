@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import image from "../public/images/avatars/image-juliusomo.png";
 import reply_img from "../public/images/icon-reply.svg";
+import delete_icon from "../public/images/icon-delete.svg";
+import edit_icon from "../public/images/icon-edit.svg";
 
 const Home = () => {
   const { data: comments } = useFetch("http://localhost:3000/comments");
@@ -83,68 +85,102 @@ const Home = () => {
               <div key={comment.id}>
                 <div className="replies_container">
                   {comment.replies &&
-                    comment.replies.map((reply, index) => {
-                      const isLastReply = index === comment.replies.length - 1; // Check if this is the last reply
-                      return (
-                        <div
-                          className={`reply_container box ${
-                            isLastReply ? "last_reply_style" : ""
-                          }`}
-                          key={reply.id}
-                        >
-                          {/* Conditionally render image at the top for the last reply */}
-                          {isLastReply && (
-                            <div className="reply_top_image">
-                              <img src={reply.topImageURL} alt="Reply Top" />
-                            </div>
-                          )}
+                    comment.replies.map((reply, index, repliesArray) => {
+                      const isLastReply = index === repliesArray.length - 1; // Determine if this is the last reply
 
-                          <div className="profile">
-                            <img src={reply.user.image.png} alt="" />
-                            <span className="user_name">
-                              {reply.user.username}
-                            </span>
-                            <span className="date_comment">
-                              {reply.createdAt}
-                            </span>
-                          </div>
-                          <p>
-                            <span className="replying_to">
-                              @{reply.replyingTo}
-                            </span>{" "}
-                            {reply.content}
-                          </p>
-                          <div className="vote_container">
-                            <div className="votes">
-                              <button
-                                className="add"
-                                onClick={() => incrementValue(reply.id)}
-                              >
-                                +
-                              </button>
-                              <span className="result">{votes[reply.id]}</span>
-                              <button
-                                className="minus"
-                                onClick={() => decrementValue(reply.id)}
-                              >
-                                -
-                              </button>
+                      if (isLastReply) {
+                        // Render the last reply with different content and styling
+                        return (
+                          <div className="reply_container box" key={reply.id}>
+                            <div className="profile">
+                              <img src={reply.user.image.png} alt="" />
+                              <span className="user_name">
+                                {reply.user.username}
+                              </span>
+                              <span className="you">you</span>
+                              <span className="date_comment">
+                                {reply.createdAt}
+                              </span>
                             </div>
-                            <div className="reply">
-                              <img src={reply_img} alt="Reply Icon" />
-                              <span>Reply</span>
+                            <p>
+                              <span className="replying_to">
+                                @{reply.replyingTo}
+                              </span>{" "}
+                              {reply.content}
+                            </p>
+
+                            <div className="vote_container">
+                              <div className="votes">
+                                <button
+                                  className="add"
+                                  onClick={() => incrementValue(reply.id)}
+                                >
+                                  +
+                                </button>
+                                <span className="result">
+                                  {votes[reply.id]}
+                                </span>
+                                <button
+                                  className="minus"
+                                  onClick={() => decrementValue(reply.id)}
+                                >
+                                  -
+                                </button>
+                              </div>
+                              <div className="action_buttons">
+                                <img src={delete_icon} alt="" />
+                                <span>Delete</span>
+                                <img src={edit_icon} alt="" />
+                                <span>Edit</span>
+                              </div>
                             </div>
                           </div>
-
-                          {/* Conditionally render edit and delete buttons for the last reply */}
-                          {isLastReply && (
-                            <div className="reply_actions">
-                              <button className="edit_reply">Edit</button>
-                              <button className="delete_reply">Delete</button>
+                        );
+                      } else {
+                        // Render all other replies normally
+                        return (
+                          <div className="reply_container box" key={reply.id}>
+                            <div className="profile">
+                              <img src={reply.user.image.png} alt="" />
+                              <span className="user_name">
+                                {reply.user.username}
+                              </span>
+                              <span className="date_comment">
+                                {reply.createdAt}
+                              </span>
                             </div>
-                          )}
-                        </div>
-                      );
+                            <p>
+                              <span className="replying_to">
+                                @{reply.replyingTo}
+                              </span>{" "}
+                              {reply.content}
+                            </p>
+                            <div className="vote_container">
+                              <div className="votes">
+                                <button
+                                  className="add"
+                                  onClick={() => incrementValue(reply.id)}
+                                >
+                                  +
+                                </button>
+                                <span className="result">
+                                  {votes[reply.id]}
+                                </span>
+                                <button
+                                  className="minus"
+                                  onClick={() => decrementValue(reply.id)}
+                                >
+                                  -
+                                </button>
+                              </div>
+                              <div className="reply">
+                                <img src={reply_img} alt="Reply Icon" />
+                                <span>Reply</span>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      }
                     })}
                 </div>
               </div>
