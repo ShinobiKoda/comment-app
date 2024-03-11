@@ -1,6 +1,7 @@
 import useFetch from "./use_fetch";
 import { useState } from "react";
 import { useEffect } from "react";
+import Modal from "./modal";
 import image from "../public/images/avatars/image-juliusomo.png";
 import reply_img from "../public/images/icon-reply.svg";
 import delete_icon from "../public/images/icon-delete.svg";
@@ -10,6 +11,8 @@ const Home = () => {
   const { data: comments } = useFetch("http://localhost:3000/comments");
 
   const [votes, setVotes] = useState({});
+  const [showModal, setShowModal] = useState(false);
+  const [replyToDelete, setReplyToDelete] = useState(null);
 
   useEffect(() => {
     if (comments && Array.isArray(comments)) {
@@ -41,6 +44,24 @@ const Home = () => {
       ...prevVotes,
       [commentId]: prevVotes[commentId] > 0 ? prevVotes[commentId] - 1 : 0,
     }));
+  };
+
+  const handleDeleteClick = (replyId) => {
+    setShowModal(true);
+    setReplyToDelete(replyId);
+  };
+
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleDelete = () => {
+    // Implement your deletion logic here
+    // For example, deleting the reply from your state or making an API call to delete the reply
+    console.log('Deleting reply with ID:', replyToDelete);
+    // Close the modal after deletion
+    setShowModal(false);
   };
 
   return (
@@ -132,8 +153,8 @@ const Home = () => {
                                 </button>
                               </div>
                               <div className="action_buttons">
-                                <img src={delete_icon} alt="" />
-                                <span>Delete</span>
+                                <img  onClick={handleDeleteClick} src={delete_icon} alt="" />
+                                <span onClick={handleDeleteClick}>Delete</span>
                                 <img src={edit_icon} alt="" />
                                 <span>Edit</span>
                               </div>
@@ -203,6 +224,11 @@ const Home = () => {
           </div>
         </div>
       </div>
+      <Modal
+        show={showModal}
+        onClose={handleCloseModal}
+        onDelete={handleDelete}
+      />
     </div>
   );
 };
