@@ -200,10 +200,10 @@ const Home = () => {
                                   </button>
                                 </div>
 
-                              </div>
-                              <div className="reply">
-                                <img src={reply_img} alt="Reply Icon" />
-                                <span>Reply</span>
+                                <div className="reply first_reply">
+                                  <img src={reply_img} alt="Reply Icon" />
+                                  <span>Reply</span>
+                                </div>
                               </div>
                             </div>
                           </div>

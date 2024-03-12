@@ -7,9 +7,12 @@ const Modal = ({ show, onClose, onDelete }) => {
   return (
     <div className="modal-overlay">
       <div className="modal">
-        <p>Are you sure you want to delete this item?</p>
-        <button onClick={onClose}>Cancel</button>
-        <button onClick={onDelete}>Delete</button>
+        <h3>Delete Comment</h3>
+        <p>Are you sure you want to delete this comment? This will remove the comment and can't be undone.</p>
+        <div className="confirm_buttons">
+          <button className="cancel" onClick={onClose}>No, Cancel</button>
+          <button className="delete" onClick={onDelete}>Yes, Delete</button>
+        </div>
       </div>
     </div>
   );
