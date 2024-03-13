@@ -42,7 +42,7 @@ button{
   margin: 0 auto;
 }
 
-.comment_container {
+.boxes{
   border-radius: 0.4rem;
   padding: 1rem;
   background-color: #fff;
@@ -107,6 +107,10 @@ button{
 
 .reply_input {
   margin-left: 1.5rem;
+  background-color: #fff;
+  margin-bottom: 1.5rem;
+  border-radius: 0.4rem;
+  padding: 1rem;
 }
 
 .reply_input img {
@@ -115,14 +119,15 @@ button{
 }
 
 .reply_input input {
-  padding: 2rem;
+  padding-top: 1rem;
+  padding-bottom: 2.5rem;
+  padding-inline: 0.7rem;
   width: 100%;
   border: none;
   outline: none;
   background: none;
-  font-size: 1.2rem;
-  border: 1px solid black;
-  border-radius: 0.5rem;
+  border: 1px solid var(--Light-gray);
+  border-radius: 0.4rem;
 }
 
 .reply_input .send {
@@ -195,7 +200,6 @@ button{
 .reply{
   display: flex;
   gap: 0.7rem;
-  margin-top: 1rem;
 }
 
 
@@ -268,13 +272,13 @@ button{
 
 .modal .confirm_buttons{
   display: flex;
-  gap: 3em;
+  gap: 3rem;
   
 }
 
 .modal .confirm_buttons button{
   padding: 1rem 0;
-  width: 10rem;
+  width: 8rem;
   color: #fff;
   text-transform: uppercase;
   outline: none;
@@ -285,6 +289,10 @@ button{
   cursor: pointer;
 }
 
+.modal .confirm_buttons button:hover{
+  opacity: 0.8;
+}
+
 .confirm_buttons button:first-of-type{
   background-color: var(--Grayish-Blue);
 }
@@ -293,30 +301,52 @@ button{
   background-color: var(--Soft-Red);
 }
 
+.reply_box{
+  display: flex;
+  margin-top: 0.6rem;
+  background-color: #fff;
+  width: 100%;
+  padding-inline: 2rem;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+
+  gap: 2rem;
+  
+  display: none;
+
+}
+
+.reply_box input{
+  padding: 3rem 7rem;
+  border-radius: 0.4rem;
+}
+
+
+
 
 @media screen and (min-width: 600px) {
-  .box{
+  .boxes{
     position: relative;
-    padding:  0 2rem;
   }
 
   .votes{
     position: absolute;
-    left: 0.7rem;
+    left: 0.6rem;
     top: 2rem;
     flex-direction: column;
   }
 
   .absolute_container{
     margin-left: 3rem;
-    padding-top: 2rem;
+    padding-top: 1rem;
+    padding-left: 1rem;
     align-items: center;
     justify-content: center;
   }
 
   .reply{
     position: absolute;
-    top: 1rem;
+    top: 2rem;
     right: 1rem;
   }
 
@@ -324,9 +354,13 @@ button{
     width: 1.5rem;
   }
 
+  .reply_container{
+    position: relative;
+  }
+
   .action_buttons{
     position: absolute;
-    top: 2.2rem;
+    top: 2rem;
     right: 1rem;
   }
 }

@@ -2,6 +2,7 @@ import useFetch from "./use_fetch";
 import { useState } from "react";
 import { useEffect } from "react";
 import Modal from "./modal";
+import ShowReply from "./reply";
 import image from "../public/images/avatars/image-juliusomo.png";
 import reply_img from "../public/images/icon-reply.svg";
 import delete_icon from "../public/images/icon-delete.svg";
@@ -51,7 +52,6 @@ const Home = () => {
     setReplyToDelete(replyId);
   };
 
-
   const handleCloseModal = () => {
     setShowModal(false);
   };
@@ -59,7 +59,7 @@ const Home = () => {
   const handleDelete = () => {
     // Implement your deletion logic here
     // For example, deleting the reply from your state or making an API call to delete the reply
-    console.log('Deleting reply with ID:', replyToDelete);
+    console.log("Deleting reply with ID:", replyToDelete);
     // Close the modal after deletion
     setShowModal(false);
   };
@@ -71,37 +71,48 @@ const Home = () => {
         {comments &&
           comments.map((comment) => (
             <div className="comment_container box" key={comment.id}>
-              <div className="absolute_container">
-                <div className="profile">
-                  <img src={comment.user.image.png} alt="" />
-                  <span className="user_name">{comment.user.username}</span>
-                  <span className="date_comment">{comment.createdAt}</span>
+              <div className="boxes">
+                <div className="absolute_container">
+                  <div className="profile">
+                    <img src={comment.user.image.png} alt="" />
+                    <span className="user_name">{comment.user.username}</span>
+                    <span className="date_comment">{comment.createdAt}</span>
+                  </div>
+                  <p>{comment.content}</p>
                 </div>
-                <p>{comment.content}</p>
+                <div className="vote_container">
+                  <div className="votes">
+                    <button
+                      className="add"
+                      onClick={() => incrementValue(comment.id)}
+                    >
+                      +
+                    </button>{" "}
+                    <span className="result">{votes[comment.id]}</span>
+                    <button
+                      className="minus"
+                      onClick={() => decrementValue(comment.id)}
+                    >
+                      -
+                    </button>
+                  </div>
+                  <div className="reply">
+                    <img onClick={ShowReply} src={reply_img} alt="" />
+                    <span>Reply</span>
+                  </div>
+                </div>
               </div>
-              <div className="vote_container">
-                <div className="votes">
-                  <button
-                    className="add"
-                    onClick={() => incrementValue(comment.id)}
-                  >
-                    +
-                  </button>{" "}
-                  <span className="result">{votes[comment.id]}</span>
-                  <button
-                    className="minus"
-                    onClick={() => decrementValue(comment.id)}
-                  >
-                    -
-                  </button>
-                </div>
-                <div className="reply">
-                  <img src={reply_img} alt="" />
-                  <span>Reply</span>
-                </div>
+
+              <div>
+
+              <ShowReply />
+
               </div>
+
             </div>
+
           ))}
+       
         <div>
           {comments &&
             comments.map((comment) => (
@@ -153,7 +164,11 @@ const Home = () => {
                                 </button>
                               </div>
                               <div className="action_buttons">
-                                <img  onClick={handleDeleteClick} src={delete_icon} alt="" />
+                                <img
+                                  onClick={handleDeleteClick}
+                                  src={delete_icon}
+                                  alt=""
+                                />
                                 <span onClick={handleDeleteClick}>Delete</span>
                                 <img src={edit_icon} alt="" />
                                 <span>Edit</span>
@@ -214,13 +229,14 @@ const Home = () => {
               </div>
             ))}
         </div>
+        
         <div className="reply_input">
           <div className="input">
             <input type="text" placeholder="Add a comment....." />
           </div>
           <div className="send">
             <img src={image} alt="" />
-            <button>Send</button>
+            <button className="send_btn">Send</button>
           </div>
         </div>
       </div>
