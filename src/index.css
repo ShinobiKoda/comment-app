@@ -310,18 +310,29 @@ button{
   padding-top: 1rem;
   padding-bottom: 2rem;
 
-  gap: 2rem;
+  gap: 1.5rem;
   
   display: none;
 
 }
 
 .reply_box input{
-  padding: 3rem 7rem;
+  padding: 1.5rem 5.7rem;
   border-radius: 0.4rem;
 }
 
+.reply_box button{
+  padding: 0.6rem 1.5rem;
+  border: none;
+  background-color: var(--Moderate-blue);
+  color: white;
+  border-radius: 0.2rem;
+}
 
+.reply_box button:hover{
+  cursor: pointer;
+  opacity: 0.6;
+}
 
 
 @media screen and (min-width: 600px) {

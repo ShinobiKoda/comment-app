@@ -3,7 +3,7 @@ import profile_pic from '../public/images/avatars/image-juliusomo.png';
 
 const ShowReply = () => {
 
-  console.log('This works')
+  // console.log('This works')
 
   return (
     <div className="reply_box">

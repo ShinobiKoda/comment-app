@@ -14,6 +14,12 @@ const Home = () => {
   const [votes, setVotes] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [replyToDelete, setReplyToDelete] = useState(null);
+  const [activeReply, setActiveReply] = useState(null);
+
+  const handleReplyClick = (id) => {
+    setActiveReply((prevActiveReply) => (prevActiveReply === id ? null : id)); // Toggle reply input visibility
+    console.log('handle reply is working');
+  };
 
   useEffect(() => {
     if (comments && Array.isArray(comments)) {
@@ -97,22 +103,20 @@ const Home = () => {
                     </button>
                   </div>
                   <div className="reply">
-                    <img onClick={ShowReply} src={reply_img} alt="" />
+                    <img
+                      onClick={() => handleReplyClick(comment.id)}
+                      src={reply_img}
+                      alt=""
+                    />
                     <span>Reply</span>
                   </div>
                 </div>
               </div>
 
-              <div>
-
-              <ShowReply />
-
-              </div>
-
+              <div>{activeReply === comment.id && <ShowReply />}</div>
             </div>
-
           ))}
-       
+
         <div>
           {comments &&
             comments.map((comment) => (
@@ -216,7 +220,11 @@ const Home = () => {
                                 </div>
 
                                 <div className="reply first_reply">
-                                  <img src={reply_img} alt="Reply Icon" />
+                                  <img
+                                    onClick={() => handleReplyClick(reply.id)}
+                                    src={reply_img}
+                                    alt="Reply Icon"
+                                  />
                                   <span>Reply</span>
                                 </div>
                               </div>
@@ -229,7 +237,7 @@ const Home = () => {
               </div>
             ))}
         </div>
-        
+
         <div className="reply_input">
           <div className="input">
             <input type="text" placeholder="Add a comment....." />
