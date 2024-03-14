@@ -310,15 +310,9 @@ button{
   padding-top: 1rem;
   padding-bottom: 2rem;
 
-  gap: 1.5rem;
+  gap: 1rem;
   
-  display: none;
 
-}
-
-.reply_box input{
-  padding: 1.5rem 5.7rem;
-  border-radius: 0.4rem;
 }
 
 .reply_box button{

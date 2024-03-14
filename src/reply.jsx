@@ -1,4 +1,5 @@
 import profile_pic from '../public/images/avatars/image-juliusomo.png';
+import DynamicTextarea from './textarea';
 
 
 const ShowReply = () => {
@@ -10,7 +11,9 @@ const ShowReply = () => {
       <div>
         <img src={profile_pic} alt="" />
       </div>
-      <input type="text" />
+      
+      <DynamicTextarea/>
+
       <div>
         <button className='reply__btn'>Reply</button>
       </div>

@@ -18,7 +18,7 @@ const Home = () => {
 
   const handleReplyClick = (id) => {
     setActiveReply((prevActiveReply) => (prevActiveReply === id ? null : id)); // Toggle reply input visibility
-    console.log('handle reply is working');
+    console.log('Reply button clicked for comment ID:', id);
   };
 
   useEffect(() => {
@@ -229,6 +229,7 @@ const Home = () => {
                                 </div>
                               </div>
                             </div>
+                            <div>{activeReply === reply.id && <ShowReply />}</div>
                           </div>
                         );
                       }
