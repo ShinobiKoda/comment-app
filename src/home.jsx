@@ -14,12 +14,15 @@ const Home = () => {
   const [votes, setVotes] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [replyToDelete, setReplyToDelete] = useState(null);
-  const [activeReply, setActiveReply] = useState(null);
+  const [activeReply, setActiveReply] = useState({});
 
   const handleReplyClick = (id) => {
-    setActiveReply((prevActiveReply) => (prevActiveReply === id ? null : id)); // Toggle reply input visibility
-    console.log('Reply button clicked for comment ID:', id);
+    setActiveReply((prevActiveReply) => ({
+      ...prevActiveReply,
+      [id]: !prevActiveReply[id] // Toggle the boolean value for this specific ID
+    }));
   };
+  
 
   useEffect(() => {
     if (comments && Array.isArray(comments)) {
@@ -102,18 +105,17 @@ const Home = () => {
                       -
                     </button>
                   </div>
-                  <div className="reply">
-                    <img
-                      onClick={() => handleReplyClick(comment.id)}
-                      src={reply_img}
-                      alt=""
-                    />
+                  <div
+                    onClick={() => handleReplyClick(comment.id)}
+                    className="reply"
+                  >
+                    <img src={reply_img} alt="" />
                     <span>Reply</span>
                   </div>
                 </div>
               </div>
 
-              <div>{activeReply === comment.id && <ShowReply />}</div>
+              <div>{activeReply[comment.id]  && <ShowReply />}</div>
             </div>
           ))}
 
@@ -129,7 +131,7 @@ const Home = () => {
                       if (isLastReply) {
                         // Render the last reply with different content and styling
                         return (
-                          <div className="reply_container box" key={reply.id}>
+                          <div className="boxes" key={reply.id}>
                             <div className="absolute_container">
                               <div className="profile">
                                 <img src={reply.user.image.png} alt="" />
@@ -168,14 +170,20 @@ const Home = () => {
                                 </button>
                               </div>
                               <div className="action_buttons">
-                                <img
-                                  onClick={handleDeleteClick}
-                                  src={delete_icon}
-                                  alt=""
-                                />
-                                <span onClick={handleDeleteClick}>Delete</span>
-                                <img src={edit_icon} alt="" />
-                                <span>Edit</span>
+                                <div className="delete_div">
+                                  <img
+                                    onClick={handleDeleteClick}
+                                    src={delete_icon}
+                                    alt=""
+                                  />
+                                  <span onClick={handleDeleteClick}>
+                                    Delete
+                                  </span>
+                                </div>
+                                <div className="edit_div">
+                                  <img src={edit_icon} alt="" />
+                                  <span>Edit</span>
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -183,53 +191,55 @@ const Home = () => {
                       } else {
                         // Render all other replies normally
                         return (
-                          <div className="reply_container box" key={reply.id}>
-                            <div className="absolute_container">
-                              <div className="profile">
-                                <img src={reply.user.image.png} alt="" />
-                                <span className="user_name">
-                                  {reply.user.username}
-                                </span>
-                                <span className="date_comment">
-                                  {reply.createdAt}
-                                </span>
-                              </div>
-                              <p>
-                                <span className="replying_to">
-                                  @{reply.replyingTo}
-                                </span>{" "}
-                                {reply.content}
-                              </p>
-                              <div className="vote_container">
-                                <div className="votes">
-                                  <button
-                                    className="add"
-                                    onClick={() => incrementValue(reply.id)}
-                                  >
-                                    +
-                                  </button>
-                                  <span className="result">
-                                    {votes[reply.id]}
+                          <div key={reply.id}>
+                            <div className="boxes">
+                              <div className="absolute_container">
+                                <div className="profile">
+                                  <img src={reply.user.image.png} alt="" />
+                                  <span className="user_name">
+                                    {reply.user.username}
                                   </span>
-                                  <button
-                                    className="minus"
-                                    onClick={() => decrementValue(reply.id)}
-                                  >
-                                    -
-                                  </button>
+                                  <span className="date_comment">
+                                    {reply.createdAt}
+                                  </span>
                                 </div>
+                                <p>
+                                  <span className="replying_to">
+                                    @{reply.replyingTo}
+                                  </span>{" "}
+                                  {reply.content}
+                                </p>
+                                <div className="vote_container">
+                                  <div className="votes">
+                                    <button
+                                      className="add"
+                                      onClick={() => incrementValue(reply.id)}
+                                    >
+                                      +
+                                    </button>
+                                    <span className="result">
+                                      {votes[reply.id]}
+                                    </span>
+                                    <button
+                                      className="minus"
+                                      onClick={() => decrementValue(reply.id)}
+                                    >
+                                      -
+                                    </button>
+                                  </div>
 
-                                <div className="reply first_reply">
-                                  <img
+                                  <div
                                     onClick={() => handleReplyClick(reply.id)}
-                                    src={reply_img}
-                                    alt="Reply Icon"
-                                  />
-                                  <span>Reply</span>
+                                    className="reply first_reply"
+                                  >
+                                    <img src={reply_img} alt="Reply Icon" />
+                                    <span>Reply</span>
+                                  </div>
                                 </div>
                               </div>
+                              <div></div>
                             </div>
-                            <div>{activeReply === reply.id && <ShowReply />}</div>
+                            {activeReply[reply.id] && <ShowReply />}
                           </div>
                         );
                       }

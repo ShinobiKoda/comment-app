@@ -20,7 +20,7 @@ const DynamicTextarea = ({ placeholder }) => {
       onChange={handleInputChange}
       style={{ 
         width: '100%', 
-        padding: '0.7rem', 
+        padding: '1.5rem 0.7rem', 
         margin: '0',
         borderRadius: '0.4rem', 
         border: '1px solid #000', 

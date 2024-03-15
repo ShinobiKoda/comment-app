@@ -37,7 +37,7 @@ button{
   height: 100%;
   flex-direction: column;
   width: 90%;
-  max-width: 600px;
+  max-width: 700px;
   gap: 1rem;
   margin: 0 auto;
 }
@@ -80,7 +80,7 @@ button{
   line-height: var(--line-height);
 }
 
-.box img {
+.boxes img {
   height: auto;
   width: 2rem;
 }
@@ -182,9 +182,13 @@ button{
   background: none;
   border: none;
   outline: none;
-  color: var(--Soft-Red);
+  color: var(--Pale-red);
   font-weight: 700;
   font-size: 1.2rem;
+}
+
+.vote_container .votes button:hover{
+  color: var(--Moderate-blue);
 }
 
 .vote_container .votes span,
@@ -197,11 +201,16 @@ button{
   cursor: pointer;
 }
 
+
+
 .reply{
   display: flex;
   gap: 0.7rem;
 }
 
+.reply:hover{
+  opacity: 0.7;
+}
 
 .action_buttons{
   display: flex;
@@ -216,12 +225,24 @@ button{
   opacity: 0.8;
 }
 
-.action_buttons > span:first-of-type{
+.delete_div,
+.edit_div{
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.delete_div:hover,
+.edit_div:hover{
+  opacity: 0.7;
+}
+
+.delete_div span{
   color: var(--Soft-Red);
   font-weight: 500;
 }
 
-.action_buttons > span:last-of-type{
+.edit_div span{
   color: var(--Moderate-blue);
   font-weight: 500;
 }
@@ -309,6 +330,7 @@ button{
   padding-inline: 2rem;
   padding-top: 1rem;
   padding-bottom: 2rem;
+  border-radius: 0.3rem;
 
   gap: 1rem;
   
@@ -321,6 +343,10 @@ button{
   background-color: var(--Moderate-blue);
   color: white;
   border-radius: 0.2rem;
+}
+
+.reply_box img{
+  width: 1.7rem;
 }
 
 .reply_box button:hover{
