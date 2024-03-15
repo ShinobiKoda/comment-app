@@ -394,4 +394,10 @@ button{
     top: 2rem;
     right: 1rem;
   }
+
+  .replies_container {
+    margin-left: 4rem;
+  }
+  
+  
 }
