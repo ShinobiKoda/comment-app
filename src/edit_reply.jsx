@@ -1,27 +1,27 @@
-import React, { useState } from "react";
+// EditReply.js
+import React, { useState } from 'react';
 
-const EditReply = ({ id, content, onSave, onCancel }) => {
+function EditReply({ id, content, onSave, onUpdate }) {
   const [editedContent, setEditedContent] = useState(content);
 
-  const handleSave = () => {
-    onSave(id, editedContent);
+  const handleUpdate = () => {
+    onUpdate(id, editedContent); // This will temporarily show the updated content in a div
   };
 
-  const handleCancel = () => {
-    onCancel();
+  const handleSave = () => {
+    onSave(id, editedContent); // This will save the edited content permanently
   };
 
   return (
-    <div className="edit-reply">
-      <input
-        type="text"
+    <div>
+      <textarea
         value={editedContent}
         onChange={(e) => setEditedContent(e.target.value)}
       />
+      <button onClick={handleUpdate}>Update</button>
       <button onClick={handleSave}>Save</button>
-      <button onClick={handleCancel}>Cancel</button>
     </div>
   );
-};
+}
 
 export default EditReply;

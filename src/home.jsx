@@ -17,6 +17,11 @@ const Home = () => {
   const [replyToDelete, setReplyToDelete] = useState(null);
   const [activeReply, setActiveReply] = useState({});
   const [editingReply, setEditingReply] = useState(null);
+  const [temporaryEditedContent, setTemporaryEditedContent] = useState({});
+
+  const handleUpdateTemporaryContent = (id, content) => {
+    setTemporaryEditedContent({ id, content }); // Update the state with the temporary content
+  };
 
   const handleEditClick = (replyId, currentContent) => {
     setEditingReply({ id: replyId, content: currentContent });
@@ -41,6 +46,9 @@ const Home = () => {
     // This might involve sending a request to your backend server
     // For now, we'll just log the updated comments
     console.log(updatedComments);
+
+    // Reset temporaryEditedContent
+    setTemporaryEditedContent({});
 
     // Close the editing mode
     setEditingReply(null);
@@ -160,10 +168,20 @@ const Home = () => {
                   {comment.replies &&
                     comment.replies.map((reply, index, repliesArray) => {
                       const isLastReply = index === repliesArray.length - 1; // Determine if this is the last reply
-
                       if (isLastReply) {
-                        // Render the last reply with different content and styling
-                        return (
+                        return editingReply?.id === reply.id ? (
+                          // Render EditReply component for the last reply if it's being edited
+                          <EditReply
+                            key={reply.id}
+                            id={reply.id}
+                            content={reply.content}
+                            onSave={handleSaveEdit}
+                            onCancel={handleCancelEdit}
+                            onUpdate={handleUpdateTemporaryContent}
+                          />
+                        ) : temporaryEditedContent.id === reply.id ? (
+                          <div>{temporaryEditedContent.content}</div> // Display the temporary edited content
+                        ) : (
                           <div className="boxes" key={reply.id}>
                             <div className="absolute_container">
                               <div className="profile">
@@ -214,7 +232,9 @@ const Home = () => {
                                   </span>
                                 </div>
                                 <div
-                                  onClick={() => setEditingReply(reply.id)}
+                                  onClick={() =>
+                                    handleEditClick(reply.id, reply.content)
+                                  }
                                   className="edit_div"
                                 >
                                   <img src={edit_icon} alt="" />

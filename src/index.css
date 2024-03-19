@@ -355,7 +355,7 @@ button{
 }
 
 
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 700px) {
   .boxes{
     position: relative;
   }
@@ -396,7 +396,7 @@ button{
   }
 
   .replies_container {
-    margin-left: 6rem;
+    margin-left: 4rem;
   }
   
   
