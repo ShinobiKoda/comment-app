@@ -3,10 +3,11 @@ import { useState } from "react";
 import { useEffect } from "react";
 import Modal from "./modal";
 import ShowReply from "./reply";
-import image from "../public/images/avatars/image-juliusomo.png";
 import reply_img from "../public/images/icon-reply.svg";
 import delete_icon from "../public/images/icon-delete.svg";
 import edit_icon from "../public/images/icon-edit.svg";
+import ReplyInput from "./reply__input";
+import EditReply from "./edit_reply";
 
 const Home = () => {
   const { data: comments } = useFetch("http://localhost:3000/comments");
@@ -15,26 +16,58 @@ const Home = () => {
   const [showModal, setShowModal] = useState(false);
   const [replyToDelete, setReplyToDelete] = useState(null);
   const [activeReply, setActiveReply] = useState({});
+  const [editingReply, setEditingReply] = useState(null);
+
+  const handleEditClick = (replyId, currentContent) => {
+    setEditingReply({ id: replyId, content: currentContent });
+  };
+
+  const handleSaveEdit = (id, editedContent) => {
+    // Update the reply in your local state
+    const updatedComments = comments.map((comment) => {
+      if (comment.replies) {
+        const updatedReplies = comment.replies.map((reply) => {
+          if (reply.id === id) {
+            return { ...reply, content: editedContent };
+          }
+          return reply;
+        });
+        return { ...comment, replies: updatedReplies };
+      }
+      return comment;
+    });
+
+    // Update your local JSON file here
+    // This might involve sending a request to your backend server
+    // For now, we'll just log the updated comments
+    console.log(updatedComments);
+
+    // Close the editing mode
+    setEditingReply(null);
+  };
+
+  const handleCancelEdit = () => {
+    setEditingReply(null);
+  };
 
   const handleReplyClick = (id) => {
     setActiveReply((prevActiveReply) => ({
       ...prevActiveReply,
-      [id]: !prevActiveReply[id] // Toggle the boolean value for this specific ID
+      [id]: !prevActiveReply[id], // Toggle the boolean value for this specific ID
     }));
   };
-  
 
   useEffect(() => {
     if (comments && Array.isArray(comments)) {
       const initialVotes = {};
       comments.forEach((comment) => {
         // Initialize votes for the comment
-        initialVotes[comment.id] = 12; // Assuming each comment starts with 12 votes
+        initialVotes[comment.id] = 0; // Assuming each comment starts with 12 votes
 
         // Check if the comment has replies and initialize their votes as well
         if (comment.replies && Array.isArray(comment.replies)) {
           comment.replies.forEach((reply) => {
-            initialVotes[reply.id] = 12; // Assuming each reply also starts with 12 votes
+            initialVotes[reply.id] = 0; // Assuming each reply also starts with 12 votes
           });
         }
       });
@@ -115,7 +148,7 @@ const Home = () => {
                 </div>
               </div>
 
-              <div>{activeReply[comment.id]  && <ShowReply />}</div>
+              <div>{activeReply[comment.id] && <ShowReply />}</div>
             </div>
           ))}
 
@@ -180,7 +213,10 @@ const Home = () => {
                                     Delete
                                   </span>
                                 </div>
-                                <div className="edit_div">
+                                <div
+                                  onClick={() => setEditingReply(reply.id)}
+                                  className="edit_div"
+                                >
                                   <img src={edit_icon} alt="" />
                                   <span>Edit</span>
                                 </div>
@@ -249,15 +285,7 @@ const Home = () => {
             ))}
         </div>
 
-        <div className="reply_input">
-          <div className="input">
-            <input type="text" placeholder="Add a comment....." />
-          </div>
-          <div className="send">
-            <img src={image} alt="" />
-            <button className="send_btn">Send</button>
-          </div>
-        </div>
+        <ReplyInput />
       </div>
       <Modal
         show={showModal}
