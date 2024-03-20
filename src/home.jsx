@@ -19,6 +19,13 @@ const Home = () => {
   const [editingReply, setEditingReply] = useState(null);
   const [temporaryEditedContent, setTemporaryEditedContent] = useState({});
 
+  const handleReplyClick = (id) => {
+    setActiveReply((prevActiveReply) => ({
+      ...prevActiveReply,
+      [id]: !prevActiveReply[id], // Toggle the boolean value for this specific ID
+    }));
+  };
+
   const handleUpdateTemporaryContent = (id, content) => {
     setTemporaryEditedContent({ id, content }); // Update the state with the temporary content
     console.log('props')

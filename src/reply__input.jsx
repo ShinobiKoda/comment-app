@@ -1,9 +1,5 @@
 import image from "../public/images/avatars/image-juliusomo.png";
 
-
-
-
-
 const ReplyInput = () => {
   return (
     <div className="reply_input">
