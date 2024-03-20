@@ -6,10 +6,7 @@ function EditReply({ id, content, onSave, onUpdate }) {
 
   const handleUpdate = () => {
     onUpdate(id, editedContent); // This will temporarily show the updated content in a div
-  };
-
-  const handleSave = () => {
-    onSave(id, editedContent); // This will save the edited content permanently
+    console.log(editedContent, "clicked");
   };
 
   return (
@@ -19,7 +16,7 @@ function EditReply({ id, content, onSave, onUpdate }) {
         onChange={(e) => setEditedContent(e.target.value)}
       />
       <button onClick={handleUpdate}>Update</button>
-      <button onClick={handleSave}>Save</button>
+      {/* <button onClick={handleSave}>Save</button> */}
     </div>
   );
 }

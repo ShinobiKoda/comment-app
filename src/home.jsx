@@ -21,49 +21,14 @@ const Home = () => {
 
   const handleUpdateTemporaryContent = (id, content) => {
     setTemporaryEditedContent({ id, content }); // Update the state with the temporary content
+    console.log('props')
   };
 
   const handleEditClick = (replyId, currentContent) => {
     setEditingReply({ id: replyId, content: currentContent });
   };
 
-  const handleSaveEdit = (id, editedContent) => {
-    // Update the reply in your local state
-    const updatedComments = comments.map((comment) => {
-      if (comment.replies) {
-        const updatedReplies = comment.replies.map((reply) => {
-          if (reply.id === id) {
-            return { ...reply, content: editedContent };
-          }
-          return reply;
-        });
-        return { ...comment, replies: updatedReplies };
-      }
-      return comment;
-    });
-
-    // Update your local JSON file here
-    // This might involve sending a request to your backend server
-    // For now, we'll just log the updated comments
-    console.log(updatedComments);
-
-    // Reset temporaryEditedContent
-    setTemporaryEditedContent({});
-
-    // Close the editing mode
-    setEditingReply(null);
-  };
-
-  const handleCancelEdit = () => {
-    setEditingReply(null);
-  };
-
-  const handleReplyClick = (id) => {
-    setActiveReply((prevActiveReply) => ({
-      ...prevActiveReply,
-      [id]: !prevActiveReply[id], // Toggle the boolean value for this specific ID
-    }));
-  };
+  
 
   useEffect(() => {
     if (comments && Array.isArray(comments)) {
@@ -109,7 +74,7 @@ const Home = () => {
   const handleDelete = () => {
     // Implement your deletion logic here
     // For example, deleting the reply from your state or making an API call to delete the reply
-    console.log("Deleting reply with ID:", replyToDelete);
+    // console.log("Deleting reply with ID:", replyToDelete);
     // Close the modal after deletion
     setShowModal(false);
   };
@@ -175,12 +140,16 @@ const Home = () => {
                             key={reply.id}
                             id={reply.id}
                             content={reply.content}
-                            onSave={handleSaveEdit}
-                            onCancel={handleCancelEdit}
                             onUpdate={handleUpdateTemporaryContent}
                           />
                         ) : temporaryEditedContent.id === reply.id ? (
-                          <div>{temporaryEditedContent.content}</div> // Display the temporary edited content
+                          <div key={reply.id}>
+                            {/* Display the temporary edited content */}
+                            <div className="temporary-content">
+                              {temporaryEditedContent}
+                              Temporary Content: {temporaryEditedContent.content}
+                            </div>
+                          </div>
                         ) : (
                           <div className="boxes" key={reply.id}>
                             <div className="absolute_container">
